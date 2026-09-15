@@ -3,35 +3,35 @@
 # ---------- Frontend ----------
 FROM node:22-alpine AS frontend-deps
 WORKDIR /app/frontend
-COPY frontend/package.json frontend/package-lock.json ./
+COPY calculator-client/package.json calculator-client/package-lock.json ./
 RUN npm ci --no-audit --no-fund
 
 FROM frontend-deps AS frontend-test
-COPY frontend/ ./
+COPY calculator-client/ ./
 RUN npm run lint && npm run coverage
 
 FROM frontend-deps AS frontend-build
-COPY frontend/ ./
+COPY calculator-client/ ./
 RUN npm run build
 
 # ---------- Backend ----------
-FROM golang:1.25-alpine AS backend-deps
+FROM golang:1.27-alpine AS backend-deps
 WORKDIR /app/backend
-COPY backend/go.mod backend/go.sum ./
+COPY calculator-server/go.mod calculator-server/go.sum ./
 RUN go mod download
 
 FROM backend-deps AS backend-test
-COPY backend/ ./
+COPY calculator-server/ ./
 RUN go vet ./... \
-    && go test -coverprofile=coverage.out ./internal/... \
+    && go test -coverprofile=coverage.out ./... \
     && go tool cover -func=coverage.out | tee coverage.txt \
     && go tool cover -html=coverage.out -o coverage.html
 
 FROM backend-deps AS backend-build
-COPY backend/ ./
+COPY calculator-server/ ./
 RUN CGO_ENABLED=0 go build -trimpath -ldflags="-s -w" -o /out/calculator-api ./cmd/server
 
-# ---------- Coverage export (docker build --target coverage --output coverage .) ----------
+# ---------- Coverage export (docker build --target coverage --output type=local,dest=coverage-report .) ----------
 FROM scratch AS coverage
 COPY --from=backend-test /app/backend/coverage.out /app/backend/coverage.txt /app/backend/coverage.html /backend/
 COPY --from=frontend-test /app/frontend/coverage /frontend/
