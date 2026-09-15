@@ -7,6 +7,8 @@ import (
 	"os"
 	"path"
 	"strings"
+
+	httpSwagger "github.com/swaggo/http-swagger/v2"
 )
 
 type RouterOptions struct {
@@ -20,6 +22,7 @@ func NewRouter(h *Handler, logger *slog.Logger, opts RouterOptions) http.Handler
 	mux.HandleFunc("GET /api/v1/health", h.Health)
 	mux.HandleFunc("GET /api/v1/operations", h.ListOperations)
 	mux.HandleFunc("POST /api/v1/operations/{operation}", h.Calculate)
+	mux.Handle("GET /swagger/", httpSwagger.WrapHandler)
 	mux.HandleFunc("/api/", h.NotFound)
 
 	if opts.StaticDir != "" {

@@ -13,6 +13,7 @@ import (
 	"calculator-api/api"
 	"calculator-api/calculator"
 	"calculator-api/config"
+	_ "calculator-api/docs"
 )
 
 func main() {

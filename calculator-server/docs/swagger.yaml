@@ -1,0 +1,144 @@
+basePath: /api/v1
+definitions:
+  httpapi.CalculationRequest:
+    properties:
+      operands:
+        example:
+        - 12
+        - 3
+        items:
+          type: number
+        type: array
+    type: object
+  httpapi.CalculationResponse:
+    properties:
+      operands:
+        example:
+        - 12
+        - 3
+        items:
+          type: number
+        type: array
+      operation:
+        example: divide
+        type: string
+      result:
+        example: 4
+        type: number
+    type: object
+  httpapi.ErrorDetail:
+    properties:
+      code:
+        example: DIVISION_BY_ZERO
+        type: string
+      message:
+        example: division by zero is not allowed
+        type: string
+    type: object
+  httpapi.ErrorResponse:
+    properties:
+      error:
+        $ref: '#/definitions/httpapi.ErrorDetail'
+    type: object
+  httpapi.HealthResponse:
+    properties:
+      status:
+        example: ok
+        type: string
+    type: object
+  httpapi.OperationResponse:
+    properties:
+      arity:
+        example: 2
+        type: integer
+      name:
+        example: add
+        type: string
+    type: object
+  httpapi.OperationsResponse:
+    properties:
+      operations:
+        items:
+          $ref: '#/definitions/httpapi.OperationResponse'
+        type: array
+    type: object
+info:
+  contact: {}
+  description: REST microservice that performs basic and advanced arithmetic operations.
+  title: Calculator API
+  version: "1.0"
+paths:
+  /health:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/httpapi.HealthResponse'
+      summary: Health check
+      tags:
+      - system
+  /operations:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/httpapi.OperationsResponse'
+      summary: List supported operations
+      tags:
+      - calculator
+  /operations/{operation}:
+    post:
+      consumes:
+      - application/json
+      description: Binary operations (add, subtract, multiply, divide, power, percentage)
+        take two operands; sqrt takes one. percentage returns operands[1] percent
+        of operands[0].
+      parameters:
+      - description: Operation name
+        enum:
+        - add
+        - subtract
+        - multiply
+        - divide
+        - power
+        - sqrt
+        - percentage
+        in: path
+        name: operation
+        required: true
+        type: string
+      - description: Operands
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/httpapi.CalculationRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/httpapi.CalculationResponse'
+        "400":
+          description: Malformed JSON or wrong operands
+          schema:
+            $ref: '#/definitions/httpapi.ErrorResponse'
+        "404":
+          description: Unknown operation
+          schema:
+            $ref: '#/definitions/httpapi.ErrorResponse'
+        "422":
+          description: Mathematically invalid (e.g. division by zero)
+          schema:
+            $ref: '#/definitions/httpapi.ErrorResponse'
+      summary: Perform a calculation
+      tags:
+      - calculator
+swagger: "2.0"
