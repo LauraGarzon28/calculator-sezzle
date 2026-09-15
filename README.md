@@ -4,7 +4,6 @@ A full-stack calculator with a **React + TypeScript** frontend and a **Go** REST
 
 The arithmetic operations are executed through the backend API, while the frontend provides a responsive calculator interface with keyboard support, calculation history and validation.
 
-
 ## Features
 
 * **Arithmetic operations:** addition, subtraction, multiplication, division, exponentiation, square root, and percentage.
@@ -69,14 +68,6 @@ The API runs by default on:
 ```text
 http://localhost:8080
 ```
-
-Environment variables:
-
-| Variable          | Default | Description                             |
-| ----------------- | ------- | --------------------------------------- |
-| `PORT`            | `8080`  | HTTP server port                        |
-| `STATIC_DIR`      | empty   | Directory containing the built frontend |
-| `ALLOWED_ORIGINS` | empty   | Comma-separated CORS origins            |
 
 ### Frontend
 
