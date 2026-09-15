@@ -29,8 +29,6 @@ func Divide() Operation {
 	}}
 }
 
-// Power raises the first operand to the second. Results that are not real numbers
-// (e.g. a negative base with a fractional exponent) are rejected by the Service.
 func Power() Operation {
 	return binaryOperation{name: "power", fn: func(a, b float64) (float64, error) {
 		return math.Pow(a, b), nil
@@ -53,7 +51,6 @@ func Percentage() Operation {
 	}}
 }
 
-// DefaultOperations returns every operation supported by the API, in display order.
 func DefaultOperations() []Operation {
 	return []Operation{Add(), Subtract(), Multiply(), Divide(), Power(), SquareRoot(), Percentage()}
 }
