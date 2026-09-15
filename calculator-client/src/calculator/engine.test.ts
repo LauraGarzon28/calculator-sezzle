@@ -1,8 +1,8 @@
 import { beforeEach, describe, expect, it } from 'vitest';
-import { CalculatorApiError } from '../api/calculatorApi';
+import { CalculatorApiError } from '../api/calculatorApi.ts';
 import { createFakeCalculatorApi } from '../test/fakeCalculatorApi.ts';
-import { createCalculatorEngine, initialState, type CalculatorEngine, type CalculatorState } from './engine';
-import type { Calculation, CalculatorAction, Digit } from './types';
+import { createCalculatorEngine, initialState, type CalculatorEngine, type CalculatorState } from './engine.ts';
+import type { Calculation, CalculatorAction, Digit } from './types.ts';
 
 const TOKEN_ACTIONS: Record<string, CalculatorAction> = {
   '+': { type: 'operator', operator: 'add' },
