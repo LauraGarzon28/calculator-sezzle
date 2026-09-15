@@ -1,0 +1,29 @@
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 24rem) minmax(0, 20rem);
+  align-items: stretch;
+  justify-content: center;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.calculator {
+  padding: 1.25rem;
+  background-color: var(--color-jacarta);
+  border-radius: 1.75rem;
+  box-shadow: var(--shadow-strong);
+}
+
+.layout > section:last-child {
+  max-height: 34rem;
+}
+
+@media (max-width: 760px) {
+  .layout {
+    grid-template-columns: minmax(0, 26rem);
+  }
+
+  .layout > section:last-child {
+    max-height: 22rem;
+  }
+}
