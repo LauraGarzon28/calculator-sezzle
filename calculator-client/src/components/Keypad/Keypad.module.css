@@ -1,0 +1,86 @@
+.keypad {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+}
+
+.key {
+  min-height: 3.75rem;
+  border: none;
+  border-radius: 0.875rem;
+  font: inherit;
+  font-size: 1.35rem;
+  font-weight: 500;
+  color: var(--color-white);
+  cursor: pointer;
+  transition:
+    background-color 120ms ease,
+    transform 80ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.key:active:not(:disabled) {
+  transform: scale(0.96);
+}
+
+.key:focus-visible {
+  outline: 2px solid var(--color-white);
+  outline-offset: 2px;
+}
+
+.key:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.digit {
+  background-color: var(--key-digit);
+  font-size: 1.5rem;
+}
+
+.digit:hover:not(:disabled) {
+  background-color: var(--key-digit-hover);
+}
+
+.function {
+  background-color: var(--key-function);
+  font-size: 1.15rem;
+}
+
+.function:hover:not(:disabled) {
+  background-color: var(--key-function-hover);
+}
+
+.operator {
+  background-color: var(--key-operator);
+  font-size: 1.6rem;
+}
+
+.operator:hover:not(:disabled) {
+  background-color: var(--key-operator-hover);
+}
+
+.equals {
+  background-color: var(--color-white);
+  color: var(--color-jacarta);
+  font-size: 1.75rem;
+  font-weight: 600;
+}
+
+.equals:hover:not(:disabled) {
+  background-color: var(--key-equals-hover);
+}
+
+.equals:focus-visible {
+  outline-color: var(--color-white);
+}
+
+.wide {
+  grid-column: span 2;
+}
+
+@media (max-width: 400px) {
+  .key {
+    min-height: 3.25rem;
+  }
+}
