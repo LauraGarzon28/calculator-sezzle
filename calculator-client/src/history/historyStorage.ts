@@ -15,7 +15,7 @@ const STORAGE_KEY = 'calculator:history';
 
 type KeyValueStore = Pick<Storage, 'getItem' | 'setItem'>;
 
-// Persists the history in localStorage.
+// Persists the history in localStorage
 export function createLocalHistoryStorage(store: KeyValueStore | null = getLocalStorage(), key = STORAGE_KEY): HistoryStorage {
   return {
     load() {
@@ -30,6 +30,7 @@ export function createLocalHistoryStorage(store: KeyValueStore | null = getLocal
       try {
         store?.setItem(key, JSON.stringify(entries));
       } catch {
+        return;
       }
     },
   };
