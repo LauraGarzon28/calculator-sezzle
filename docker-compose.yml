@@ -1,0 +1,9 @@
+services:
+  calculator:
+    build:
+      context: .
+      target: runtime
+    image: calculator-app
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
